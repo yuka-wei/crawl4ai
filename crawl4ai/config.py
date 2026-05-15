@@ -36,6 +36,7 @@ PROVIDER_MODELS_PREFIXES = {
     "anthropic": os.getenv("ANTHROPIC_API_KEY"),
     "gemini": os.getenv("GEMINI_API_KEY"),
     "deepseek": os.getenv("DEEPSEEK_API_KEY"),
+    "bedrock": None,  # AWS Bedrock uses IAM roles/profiles, no API key needed
 }
 
 # Chunk token threshold

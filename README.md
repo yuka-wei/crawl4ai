@@ -520,6 +520,49 @@ if __name__ == "__main__":
 </details>
 
 <details>
+<summary>☁️ <strong>AWS Bedrock LLM Support with Flexible Authentication</strong></summary>
+
+Crawl4AI supports AWS Bedrock models with multiple authentication methods. Credentials are resolved with priority: **explicit code > environment variables > AWS profile > IAM role**.
+
+```python
+    # Method 1: IAM Role (recommended for EC2/ECS/Lambda)
+    LLMConfig(
+        provider="bedrock/us.anthropic.claude-sonnet-4-6",
+        provider_config={"aws_region_name": "us-east-1"}
+    )
+
+    # Method 2: AWS Profile
+    LLMConfig(
+        provider="bedrock/us.anthropic.claude-sonnet-4-6",
+        provider_config={
+            "aws_region_name": "us-west-2",
+            "aws_profile": "my-profile"
+        }
+    )
+
+    # Method 3: Explicit Credentials (highest priority)
+    LLMConfig(
+        provider="bedrock/us.anthropic.claude-sonnet-4-6",
+        provider_config={
+            "aws_region_name": "us-east-1",
+            "aws_access_key_id": "AKIA...",
+            "aws_secret_access_key": "..."
+        }
+    )
+
+    # Method 4: Environment Variables (automatic fallback)
+    # Set: export AWS_REGION=us-east-1
+    #      export AWS_ACCESS_KEY_ID=AKIA...
+    #      export AWS_SECRET_ACCESS_KEY=...
+    LLMConfig(
+        provider="bedrock/us.anthropic.claude-sonnet-4-6"
+        # Automatically uses AWS environment variables
+    )
+```
+
+</details>
+
+<details>
 <summary>🤖 <strong>Using Your own Browser with Custom User Profile</strong></summary>
 
 ```python
@@ -687,7 +730,6 @@ This release focuses on stability with 11 bug fixes addressing issues reported b
         instruction="Extract table data",
         input_format="html"  # Now supports: "html", "markdown", "fit_markdown"
     )
-    ```
   - Fixed raw HTML URL variable - extraction strategies now receive `"Raw HTML"` instead of HTML blob (#1116)
 
 - **🔗 URL Handling**:
